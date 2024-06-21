@@ -43,7 +43,9 @@
                         DATE_FORMAT(dataNascContato, '%d/%m/%Y') AS dataNascContato
                         FROM tbcontatos 
                         WHERE idContato = '$txt_pesquisa' 
-                        or nomeContato LIKE '%$txt_pesquisa%'
+                        or nomeContato 
+                        or emailContato 
+                        LIKE '%$txt_pesquisa%'
                         ORDER BY nomeContato $ordenar;
                         ";
         //FIM DO CODIGO SQL

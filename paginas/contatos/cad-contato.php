@@ -16,6 +16,10 @@
             <input type="text" name="telefoneContato" required id="telefoneContato">
         </div>
         <div>
+            <label for="enderecoContato">Endereço</label>
+            <input type="text" name="enderecoContato" required id="enderecoContato">
+        </div>
+        <div>
             <label for="sexoContato">Sexo</label>
             <input type="text" name="sexoContato" required id="sexoContato">
         </div>

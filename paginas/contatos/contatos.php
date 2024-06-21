@@ -4,6 +4,7 @@
 <div>
     <a href="index.php?menuop=cad-contato">Novo Contato</a>
 </div>
+
 <table border="2">
     <thead>
         <tr>
@@ -20,7 +21,13 @@
     </thead>
     <tbody>
     <?php 
+
+        $txt_pesquisa = ($_POST["txt_pesquisa"]) ?? "";
+        $voltar = $_POST["voltar"] ?? "";
+        $ordenar = $_POST["ordenar"] ?? "ASC";
+
         //CODIGO EM SQL, FEITO NO MySQL Workbench
+        
         $sql = "SELECT 
                         idContato, 
                         upper (nomeContato)AS nomeContato,
@@ -34,7 +41,11 @@
                             'NÃO ESPECIFICADO'
                         END AS sexoContato,
                         DATE_FORMAT(dataNascContato, '%d/%m/%Y') AS dataNascContato
-                        FROM tbcontatos";
+                        FROM tbcontatos 
+                        WHERE idContato = '$txt_pesquisa' 
+                        or nomeContato LIKE '%$txt_pesquisa%'
+                        ORDER BY nomeContato $ordenar;
+                        ";
         //FIM DO CODIGO SQL
 
         $result = mysqli_query($conexao, $sql) or die("Erro ao executar a consulta". mysqli_error($conexao));
@@ -53,5 +64,19 @@
             <td><a href="index.php?menuop=excluir-contato&idContato=<?= htmlspecialchars($dados["idContato"]) ?>">Excluir</a></td>
         </tr>
         <?php endwhile; ?>
+
+    <div>
+        <form action="index.php?menuop=contatos" method="post">
+            <input type="text" name="txt_pesquisa" value="<?="$txt_pesquisa"?>" id="txt_pesquisa">
+            <input type="submit" value="Pesquisar">
+        </form>
+        <form action="index.php?menuop=contatos" method="post">
+            <input type="submit" value="Voltar" name="voltar">
+        </form>
+        <form action="index.php?menuop=contatos" method="post">
+            <input type="hidden" name="ordenar" value="<?php echo (isset($_POST['ordenar']) && $_POST['ordenar'] === 'DESC') ? 'ASC' : 'DESC'; ?>">
+            <button type="submit">Ordenar de <?php echo (isset($_POST['ordenar']) && $_POST['ordenar'] === 'DESC') ? 'A-Z' : 'Z-A'; ?></button>
+        </form>
+    </div>
     </tbody>
 </table>

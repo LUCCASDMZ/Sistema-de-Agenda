@@ -8,6 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema agendador 1.0</title>
+    <link rel="stylesheet" href="/css/estilo-padrao.css">
 </head>
 <body>
     <header>

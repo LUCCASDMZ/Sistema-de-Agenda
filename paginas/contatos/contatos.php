@@ -14,10 +14,13 @@
             <th>Endereço</th>
             <th>Sexo</th>
             <th>Data de Nascimento</th>
+            <th>Edição</th>
+            <th>Excluir</th>
         </tr>
     </thead>
     <tbody>
     <?php 
+        //CODIGO EM SQL, FEITO NO MySQL Workbench
         $sql = "SELECT 
                         idContato, 
                         upper (nomeContato)AS nomeContato,
@@ -32,9 +35,11 @@
                         END AS sexoContato,
                         DATE_FORMAT(dataNascContato, '%d/%m/%Y') AS dataNascContato
                         FROM tbcontatos";
-        $rs = mysqli_query($conexao, $sql) or die("Erro ao executar a consulta". mysqli_error($conexao));
+        //FIM DO CODIGO SQL
 
-        while($dados = mysqli_fetch_assoc($rs)):
+        $result = mysqli_query($conexao, $sql) or die("Erro ao executar a consulta". mysqli_error($conexao));
+
+        while($dados = mysqli_fetch_assoc($result)):
     ?>
         <tr>
             <td><?= htmlspecialchars($dados["idContato"]) ?></td>
@@ -44,6 +49,8 @@
             <td><?= htmlspecialchars($dados['enderecoContato']) ?></td>
             <td><?= htmlspecialchars($dados['sexoContato']) ?></td>
             <td><?= htmlspecialchars($dados['dataNascContato']) ?></td>
+            <td><a href="index.php?menuop=editar-contato&idContato=<?= htmlspecialchars($dados["idContato"]) ?>">Editar</a></td>
+            <td><a href="index.php?menuop=excluir-contato&idContato=<?= htmlspecialchars($dados["idContato"]) ?>">Excluir</a></td>
         </tr>
         <?php endwhile; ?>
     </tbody>

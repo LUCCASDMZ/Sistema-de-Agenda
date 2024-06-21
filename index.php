@@ -31,6 +31,10 @@
                 'eventos' => 'paginas/eventos/eventos.php',
                 'cad-contato' => 'paginas/contatos/cad-contato.php',
                 'inserir-contato' => 'paginas/contatos/inserir-contato.php',
+                'editar-contato' => 'paginas/contatos/editar-contato.php',
+                'atualizar-contato' => 'paginas/contatos/atualizar-contato.php',
+                'excluir-contato' => 'paginas/contatos/excluir-contato.php'
+
             ];
             
             // Obtendo o valor de menuop da URL ou definindo-o como 'home' se não estiver presente

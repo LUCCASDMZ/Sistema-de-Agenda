@@ -1,0 +1,17 @@
+.tes{
+    background-color: aqua;
+}
+
+body{
+    background-color: #3b4147;
+    color: white;
+}
+
+#date{
+    text-align: center;
+}
+
+#test{
+    display: inline;
+    margin: 10px;
+}

@@ -1,6 +1,7 @@
 <header>
     <h3>Contatos</h3>
 </header>
+<link rel="stylesheet" href="/css/estilo-padrao.css">
 <div>
     <a href="index.php?menuop=cad-contato">Novo Contato</a>
 </div>
@@ -22,7 +23,7 @@
     <tbody>
     <?php 
 
-        $quantidade = 4;
+        $quantidade = 7;
 
         //Se a varialvel get pagina existir ENTAO guarda o valor em get pagina, SENAO 1                   
         $pagina = (isset($_GET['pagina']))? (int)$_GET['pagina'] : 1;
@@ -68,7 +69,7 @@
             <td><?= htmlspecialchars($dados['telefoneContato']) ?></td>
             <td><?= htmlspecialchars($dados['enderecoContato']) ?></td>
             <td><?= htmlspecialchars($dados['sexoContato']) ?></td>
-            <td><?= htmlspecialchars($dados['dataNascContato']) ?></td>
+            <td id="date"><?= htmlspecialchars($dados['dataNascContato']) ?></td>
             <td><a href="index.php?menuop=editar-contato&idContato=<?= htmlspecialchars($dados["idContato"]) ?>">Editar</a></td>
             <td><a href="index.php?menuop=excluir-contato&idContato=<?= htmlspecialchars($dados["idContato"]) ?>">Excluir</a></td>
         </tr>
@@ -79,10 +80,10 @@
                 <input type="text" name="txt_pesquisa" value="<?="$txt_pesquisa"?>" id="txt_pesquisa">
                 <input type="submit" value="Pesquisar">
             </form>
-            <form action="index.php?menuop=contatos" method="post">
+            <form action="index.php?menuop=contatos" method="post" id="test">
                 <input type="submit" value="Voltar" name="voltar">
             </form>
-            <form action="index.php?menuop=contatos" method="post">
+            <form action="index.php?menuop=contatos" method="post" id="test">
                 <input type="hidden" name="ordenar" value="<?php echo (isset($_POST['ordenar']) && $_POST['ordenar'] === 'DESC') ? 'ASC' : 'DESC'; ?>">
                 <button type="submit">Ordenar de <?php echo (isset($_POST['ordenar']) && $_POST['ordenar'] === 'DESC') ? 'A-Z' : 'Z-A'; ?></button>
             </form>

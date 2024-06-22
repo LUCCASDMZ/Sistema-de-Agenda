@@ -22,6 +22,13 @@
     <tbody>
     <?php 
 
+        $quantidade = 4;
+
+        //Se a varialvel get pagina existir ENTAO guarda o valor em get pagina, SENAO 1                   
+        $pagina = (isset($_GET['pagina']))? (int)$_GET['pagina'] : 1;
+
+        $inicio = ($quantidade * $pagina) - $quantidade;
+
         $txt_pesquisa = ($_POST["txt_pesquisa"]) ?? "";
         $voltar = $_POST["voltar"] ?? "";
         $ordenar = $_POST["ordenar"] ?? "ASC";
@@ -46,8 +53,8 @@
                         or nomeContato 
                         or emailContato 
                         LIKE '%$txt_pesquisa%'
-                        ORDER BY nomeContato $ordenar;
-                        ";
+                        ORDER BY nomeContato $ordenar
+                        LIMIT $inicio, $quantidade";
         //FIM DO CODIGO SQL
 
         $result = mysqli_query($conexao, $sql) or die("Erro ao executar a consulta". mysqli_error($conexao));
@@ -67,18 +74,51 @@
         </tr>
         <?php endwhile; ?>
 
-    <div>
-        <form action="index.php?menuop=contatos" method="post">
-            <input type="text" name="txt_pesquisa" value="<?="$txt_pesquisa"?>" id="txt_pesquisa">
-            <input type="submit" value="Pesquisar">
-        </form>
-        <form action="index.php?menuop=contatos" method="post">
-            <input type="submit" value="Voltar" name="voltar">
-        </form>
-        <form action="index.php?menuop=contatos" method="post">
-            <input type="hidden" name="ordenar" value="<?php echo (isset($_POST['ordenar']) && $_POST['ordenar'] === 'DESC') ? 'ASC' : 'DESC'; ?>">
-            <button type="submit">Ordenar de <?php echo (isset($_POST['ordenar']) && $_POST['ordenar'] === 'DESC') ? 'A-Z' : 'Z-A'; ?></button>
-        </form>
-    </div>
+        <div>
+            <form action="index.php?menuop=contatos" method="post">
+                <input type="text" name="txt_pesquisa" value="<?="$txt_pesquisa"?>" id="txt_pesquisa">
+                <input type="submit" value="Pesquisar">
+            </form>
+            <form action="index.php?menuop=contatos" method="post">
+                <input type="submit" value="Voltar" name="voltar">
+            </form>
+            <form action="index.php?menuop=contatos" method="post">
+                <input type="hidden" name="ordenar" value="<?php echo (isset($_POST['ordenar']) && $_POST['ordenar'] === 'DESC') ? 'ASC' : 'DESC'; ?>">
+                <button type="submit">Ordenar de <?php echo (isset($_POST['ordenar']) && $_POST['ordenar'] === 'DESC') ? 'A-Z' : 'Z-A'; ?></button>
+            </form>
+        </div>
     </tbody>
 </table>
+<br>
+<?php 
+    
+    $sqlTotal = "SELECT idContato FROM tbContatos";
+    $qrTotal = mysqli_query($conexao, $sqlTotal) or die (mysqli_error($conexao));
+    $numTotal = mysqli_num_rows($qrTotal);
+    $totalPagina = ceil($numTotal / $quantidade);
+
+    echo "Total de Registro $numTotal <br>";
+    echo '<a href="?menuop=contatos&pagina=1">Primeira pagina</a>';
+
+    if ($pagina > 2) {
+        echo '<a href="?menuop=contatos&pagina=' . ($pagina - 1) . '"> << </a> ';
+    }
+
+    for($i=1; $i <= $totalPagina; $i++){
+
+        if($i >= ($pagina-5) && $i <= ($pagina+5)){
+            if($i == $pagina){
+                echo $i;
+            }else{
+                echo "<a href=\"?menuop=contatos&pagina=$i\">$i</a> ";
+            }
+        }
+    }
+
+    if ($pagina < $totalPagina - 1) {
+        echo '<a href="?menuop=contatos&pagina=' . ($pagina + 1) . '"> >> </a> ';
+    }
+    
+    echo "<a href=\"?menuop=contatos&pagina=$totalPagina\">Ultima pagina</a>";
+
+?>

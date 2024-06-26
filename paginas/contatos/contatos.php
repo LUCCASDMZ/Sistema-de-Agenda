@@ -11,16 +11,11 @@
 </div>
 
 <div>
-    <form action="index.php?menuop=contatos" method="post" style="display: inline;" >
-        <input type="text" name="txt_pesquisa" value="<?="$txt_pesquisa"?>" id="txt_pesquisa">
-        <button class="btn btn-outline-success btn-sm" type="submit"><i class="bi bi-search"></i> Pesquisar</button>
-    </form>
-    <form action="index.php?menuop=contatos" method="post" class="test">
-        <input type="submit" value="Voltar" name="voltar">
-    </form>
-    <form action="index.php?menuop=contatos" method="post" class="test">
-        <input type="hidden" name="ordenar" value="<?php echo (isset($_POST['ordenar']) && $_POST['ordenar'] === 'DESC') ? 'ASC' : 'DESC'; ?>">
-        <button type="submit">Ordenar de <?php echo (isset($_POST['ordenar']) && $_POST['ordenar'] === 'DESC') ? 'A-Z' : 'Z-A'; ?></button>
+    <form action="index.php?menuop=contatos" method="post">
+        <div class="input-group">
+            <input class="form-control" type="text" name="txt_pesquisa" value="<?="$txt_pesquisa"?>" id="txt_pesquisa">
+            <button class="btn btn-outline-success btn-sm" type="submit"><i class="bi bi-search"></i> Pesquisar</button>
+        </div>
     </form>
 </div>
 

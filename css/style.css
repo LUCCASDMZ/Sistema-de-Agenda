@@ -5,8 +5,7 @@ body{
 }
 
 .test{
-    display: inline;
-    margin: 10px;
+    background-color: wheat;
 }
 
 .tabela{

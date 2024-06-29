@@ -80,30 +80,37 @@
         ?>
     
         <div class="mb-3">
-            <img width="300" w src="./paginas/contatos/fotos-contatos/<?=$nomeFoto?>">
+            <img id="foto-contato" class="img-fluid img-thumbnail" width="300" w src="./paginas/contatos/fotos-contatos/<?=$nomeFoto?>">
+        </div>
+        <div class="mb-3">
+            <button class="btn btn-info" id="btn-editar-foto">
+                <i class="bi bi-camera-fill"></i> Editar foto
+            </button>
         </div>
 
-                    <div id="editar-foto">
-                        <div class="mb-3">
-                            <button class="btn btn-info" id="btn-editar-foto">
-                                <i class="bi bi-camera-fill"></i>
-                            </button>
-                        </div>
-                        <form action="" method="post" enctype="multipart/form-data" id="form-upload-foto" class="mb-3">
-                            <input type="hidden" name="idContato" id="<?=$idContato?>">
-                            <label class="form-label" for="arquivo">Selecione um arquivo de imagem da foto</label>
-                        <div class="input-group">
-                            <input type="file" name="arquivo" id="arquivo" class="form-control">
-                            <input type="submit" value="Enviar" class="btn btn-secondary">
-                        </div>
-                        </form>
-                        <div id="mensagem" class="mb-3 alert alert-success">
-                            Mensagem aqui
-                        </div>
-                        <div id="preloader" class="progress">
-                            <div id="barra" class="progress-bar bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
+        <div id="editar-foto">
+                <form id="form-upload-foto" class="mb-3" action="" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="idContato" value="<?=$idContato?>">
+                <label class="form-label" for="arquivo">Selecione um arquivo de imagem da foto</label>
+                    <div class="input-group">
+                        <input class="form-control" type="file" name="arquivo" id="arquivo">
+                        <input id="btn-enviar-foto" class="btn btn-secondary" type="submit" value="Enviar">
                     </div>
+
+                </form>
+                <div id="mensagem" class="mb-3 alert alert-success">
+                    
+                </div>
+                <div id="preloader" class="progress">
+                    <div id="barra"
+                    class="progress-bar bg-danger" 
+                    role="progressbar" 
+                    style="width: 0%" 
+                    aria-valuenow="0" 
+                    aria-valuemin="0" 
+                    aria-valuemax="100">0%</div>
+                </div>  
+            </div>
     </div>
 </div>
 

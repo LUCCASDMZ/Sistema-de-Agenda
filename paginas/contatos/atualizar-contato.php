@@ -10,7 +10,6 @@
     $enderecoContato = mysqli_real_escape_string($conexao, $_POST["enderecoContato"]);
     $sexoContato = mysqli_real_escape_string($conexao, $_POST["sexoContato"]);
     $dataNascContato = mysqli_real_escape_string($conexao, $_POST["dataNascContato"]);
-    $nomeFotoContato = mysqli_real_escape_string($conexao, $_POST["nomeFotoContato"]);
     
 
     $sql = "UPDATE tbcontatos SET 
@@ -20,7 +19,6 @@
         enderecoContato = '$enderecoContato',
         sexoContato = '$sexoContato',
         dataNascContato = '$dataNascContato'
-        nomeFotoContato = '$nomeFotoContato'
         WHERE idContato = '$idContato'
         ";
             mysqli_query($conexao, $sql) or die ("Erro ao execultar a consulta.".mysqli_error($conexao));

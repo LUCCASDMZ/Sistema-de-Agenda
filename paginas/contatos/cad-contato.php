@@ -51,11 +51,6 @@
                 <input type="date" name="dataNascContato" required class="form-control" id="dataNascContato">
             </div>
         </div>
-        <div class="mb-3 row col-3">
-            <label for="foto">Insira sua foto</label>
-            <input type="file" name="foto" id="foto">
-        </div>
-        <div class="mb-3" >
             <input class="btn btn-success" type="submit" value="Adicionar" name="btnAdicionar">
         </div>
     </form>

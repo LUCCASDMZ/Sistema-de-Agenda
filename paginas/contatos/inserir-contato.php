@@ -17,8 +17,7 @@
         telefoneContato,
         enderecoContato,
         sexoContato,
-        dataNascContato,
-        nomeFotoContato)
+        dataNascContato)
         VALUES(
             '$nomeContato',
             '$emailContato',

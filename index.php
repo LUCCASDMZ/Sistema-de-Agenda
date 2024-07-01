@@ -35,6 +35,7 @@
             
                 // Definindo um array associativo para mapear os valores de menuop para os arquivos correspondentes.
                 $pages = [
+
                     'home' => 'paginas/home/home.php',
                     'contatos' => 'paginas/contatos/contatos.php',
                     'tarefas' => 'paginas/tarefas/tarefas.php',
@@ -43,7 +44,13 @@
                     'inserir-contato' => 'paginas/contatos/inserir-contato.php',
                     'editar-contato' => 'paginas/contatos/editar-contato.php',
                     'atualizar-contato' => 'paginas/contatos/atualizar-contato.php',
-                    'excluir-contato' => 'paginas/contatos/excluir-contato.php'
+                    'excluir-contato' => 'paginas/contatos/excluir-contato.php',
+                    'cad-tarefas' => 'paginas/tarefas/cad-tarefas.php',
+                    'inserir-tarefas' => 'paginas/tarefas/inserir-tarefas.php',
+                    'editar-tarefas' => 'paginas/tarefas/editar-tarefas.php',
+                    'excluir-tarefas' => 'paginas/tarefas/excluir-tarefas.php',
+                    'status-tarefas-concluido' => 'paginas/tarefas/status-tarefas-concluido.php',
+                    'status-tarefas-em-andamento' => 'paginas/tarefas/status-tarefas-em-andamento.php'
     
                 ];
     

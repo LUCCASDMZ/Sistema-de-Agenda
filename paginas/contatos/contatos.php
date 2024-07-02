@@ -1,5 +1,13 @@
 <?php 
     $txt_pesquisa = ($_POST["txt_pesquisa"]) ?? "";
+        //alternar entre status concluido ou nao concluido
+    //  SE ele existe na barra de URL, de o valor idTarefa, SE NAO o valor fica vazio
+    $idContato = (isset($_GET['idContato']))? $_GET['idContato'] : "0"; 
+    $flagFavoritoContato = (isset($_GET['flagFavoritoContato']) and $_GET['flagFavoritoContato']== '0')? '1':'0';
+
+    $sql = "UPDATE tbcontatos SET flagFavoritoContato = $flagFavoritoContato WHERE idContato = $idContato";
+
+    $result = mysqli_query($conexao, $sql);
 ?>
 
 <header>
@@ -23,6 +31,7 @@
     <table class="table table-dark table-hover table-bordered table-sm">
             <thead>
                 <tr>
+                    <th>Favoritos</th>
                     <th>ID</th>
                     <th>Nome</th>
                     <th>E-mail</th>
@@ -52,6 +61,7 @@
         
                 $sql = "SELECT
                                 idContato,
+                                flagFavoritoContato,
                                 upper (nomeContato)AS nomeContato,
                                 lower(emailContato) AS emailContato,
                                 telefoneContato,
@@ -68,7 +78,7 @@
                                 or nomeContato
                                 or emailContato
                                 LIKE '%$txt_pesquisa%'
-                                ORDER BY nomeContato $ordenar
+                                ORDER BY flagFavoritoContato DESC, nomeContato $ordenar
                                 LIMIT $inicio, $quantidade";
                 //FIM DO CODIGO SQL
         
@@ -77,6 +87,17 @@
                 while($dados = mysqli_fetch_assoc($result)):
             ?>
                 <tr class="text-nowrap">
+                    <td class="text-center">
+                        <a class="btn btn-secondary btn-sm" href="index.php?menuop=contatos&pagina=<?=$pagina?>&idContato=<?=$dados['idContato']?>&flagFavoritoContato=<?=$dados['flagFavoritoContato']?>">
+                            <?php
+                                if($dados['flagFavoritoContato'] == 0){
+                                    echo "<i class='bi bi-square'></i>";
+                                }else{
+                                    echo "<i class='bi bi-check-square-fill'></i>";
+                                }
+                            ?>
+                        </a>
+                    </td>
                     <td><?= htmlspecialchars($dados["idContato"]) ?></td>
                     <td><?= htmlspecialchars($dados['nomeContato']) ?></td>
                     <td><?= htmlspecialchars($dados['emailContato']) ?></td>

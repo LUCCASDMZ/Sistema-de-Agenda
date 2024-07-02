@@ -1,5 +1,15 @@
 <?php 
+
     $txt_pesquisa = ($_POST["txt_pesquisa"]) ?? "";
+
+    //alternar entre status concluido ou nao concluido
+    //  SE ele existe na barra de URL, de o valor idTarefa, SE NAO o valor fica vazio
+    $idTarefa = (isset($_GET['idTarefa']))? $_GET['idTarefa'] : "0"; 
+    $statusTarefa = (isset($_GET['statusTarefa']) and $_GET['statusTarefa']== '0')? '1':'0';
+
+    $sql = "UPDATE tbtarefas SET statusTarefa = $statusTarefa WHERE idTarefa = $idTarefa";
+
+    $result = mysqli_query($conexao, $sql);
 ?>
 
 <h3><i class="bi bi-list-task"></i> Tarefas</h3>
@@ -32,7 +42,7 @@
         <tbody>
             <?php
 
-                $quantidade = 5;
+                $quantidade = 3;
         
                 //Se a varialvel get pagina existir ENTAO guarda o valor em get pagina, SENAO 1
                 $pagina = (isset($_GET['pagina']))? (int)$_GET['pagina'] : 1;
@@ -60,7 +70,7 @@
                                 descricaoTarefa LIKE '%$txt_pesquisa%' OR
                                 DATE_FORMAT(dataConclusaoTarefa, '%d/%m/%Y') 
                                 LIKE '%$txt_pesquisa%'
-                                ORDER BY statusTarefa, dataConclusaoTarefa $ordenar
+                                ORDER BY statusTarefa,dataConclusaoTarefa $ordenar
                                 LIMIT $inicio, 
                                 $quantidade";                                
                 
@@ -70,7 +80,7 @@
             ?>
                 <tr class="text-nowrap">
                     <td class="text-center">
-                        <a class="btn btn-secondary btn-sm" href="index.php?menuop=status-tarefas-concluido">
+                        <a class="btn btn-secondary btn-sm" href="index.php?menuop=tarefas&pagina=<?=$pagina?>&idTarefa=<?=$dados['idTarefa']?>&statusTarefa=<?=$dados['statusTarefa']?>">
                             <?php
                                 if($dados['statusTarefa'] == 0){
                                     echo "<i class='bi bi-square'></i>";
@@ -80,18 +90,18 @@
                             ?>
                         </a>
                     </td>
-            <td class="text-nowrap"><?=$dados['tituloTarefa']?></td>
-            <td class="text-nowrap"><?=$dados['descricaoTarefa']?></td>
-            <td class="text-nowrap"><?=$dados['dataConclusaoTarefa']?></td>
-            <td class="text-nowrap"><?=$dados['horaConclusaoTarefa']?></td>
+                    <td class="text-nowrap"><?=$dados['tituloTarefa']?></td>
+                    <td class="text-nowrap"><?=$dados['descricaoTarefa']?></td>
+                    <td class="text-nowrap"><?=$dados['dataConclusaoTarefa']?></td>
+                    <td class="text-nowrap"><?=$dados['horaConclusaoTarefa']?></td>
 
-            <td class="text-center">
-                <a class="btn btn-outline-warning btn-sm" href="index.php?menuop=editar-tarefas&idTarefa=<?=$dados['idTarefa']?>"><i class="bi bi-pencil-square"></i></a>
-                
-            </td>
-            <td class="text-center">
-                <a class="btn btn-outline-danger btn-sm" href="index.php?menuop=excluir-tarefas&idTarefa=<?=$dados['idTarefa']?>"><i class="bi bi-trash-fill"></i></a>    
-            </td>
+                    <td class="text-center">
+                        <a class="btn btn-outline-warning btn-sm" href="index.php?menuop=editar-tarefas&idTarefa=<?=$dados['idTarefa']?>"><i class="bi bi-pencil-square"></i></a>
+                        
+                    </td>
+                    <td class="text-center">
+                        <a class="btn btn-outline-danger btn-sm" href="index.php?menuop=excluir-tarefas&idTarefa=<?=$dados['idTarefa']?>"><i class="bi bi-trash-fill"></i></a>    
+                    </td>
 
                 </tr>
             <?php endwhile; ?>

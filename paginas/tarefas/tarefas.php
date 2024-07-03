@@ -42,7 +42,7 @@
         <tbody>
             <?php
 
-                $quantidade = 3;
+                $quantidade = 8;
         
                 //Se a varialvel get pagina existir ENTAO guarda o valor em get pagina, SENAO 1
                 $pagina = (isset($_GET['pagina']))? (int)$_GET['pagina'] : 1;

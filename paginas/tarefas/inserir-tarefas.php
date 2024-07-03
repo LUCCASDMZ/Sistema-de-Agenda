@@ -1,23 +1,52 @@
 <header>
-    <h3>teste</h3>
+    <h3><i class="bi bi-list-task"></i> inserir Tarefa</h3>
 </header>
 
 <?php 
     
-    $tituloTarefa = mysqli_real_escape_string($conexao, $_POST["tituloTarefa"]);
-    $descricaoTarefa = mysqli_real_escape_string($conexao, $_POST["descricaoTarefa"]);
+    $tituloTarefa = strip_tags( mysqli_real_escape_string($conexao, $_POST["tituloTarefa"]));
+    $descricaoTarefa = strip_tags( mysqli_real_escape_string($conexao, $_POST["descricaoTarefa"]));
+    $dataConclusaoTarefa = strip_tags( mysqli_real_escape_string($conexao, $_POST['dataConclusaoTarefa']));
+    $horaConclusaoTarefa = strip_tags( mysqli_real_escape_string($conexao, $_POST['horaConclusaoTarefa']));
+    $dataLembreteTarefa = strip_tags( mysqli_real_escape_string($conexao, $_POST['dataLembreteTarefa']));
+    $horaLembreteTarefa = strip_tags( mysqli_real_escape_string($conexao, $_POST['horaLembreteTarefa']));
+    $recorrenciaTarefa = strip_tags( mysqli_real_escape_string($conexao, $_POST['recorrenciaTarefa']));
     
 
     $sql = "INSERT INTO tbtarefas(
             tituloTarefa,
-            descricaoTarefa)
+            descricaoTarefa,
+            dataConclusaoTarefa,
+            horaConclusaoTarefa,
+            dataLembreteTarefa,
+            horaLembreteTarefa,
+            recorrenciaTarefa)
             VALUES(
                 '$tituloTarefa',
-                '$descricaoTarefa'
+                '$descricaoTarefa',
+                '$dataConclusaoTarefa',
+                '$horaConclusaoTarefa',
+                '$dataLembreteTarefa',
+                '$horaLembreteTarefa',
+                '$recorrenciaTarefa'
             )";
 
-    mysqli_query($conexao, $sql) or die ("Erro ao executar a consulta.".mysqli_error($conexao));
+    $rs = mysqli_query($conexao, $sql);
 
-    echo "Tarefa adicionada com sucesso";
+    if($rs){
+        ?>
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading">Inserir Tarefa</h4>
+                <p>Tarefa insirida com sucesso.</p>
+                <hr>
+                <p class="mb-0"><a href="index.php?menuop=tarefas">Voltar para lista de tarefas</a>.</p>
+            </div>
+        <?php 
+    }
+    else{
+        echo "Erro ao inserir, tente novamente mais tarde";
+    }
 
     mysqli_close($conexao);
+
+   

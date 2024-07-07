@@ -50,7 +50,8 @@
                     'editar-tarefas' => 'paginas/tarefas/editar-tarefas.php',
                     'excluir-tarefas' => 'paginas/tarefas/excluir-tarefas.php',
                     'status-tarefas-concluido' => 'paginas/tarefas/status-tarefas-concluido.php',
-                    'status-tarefas-em-andamento' => 'paginas/tarefas/status-tarefas-em-andamento.php'
+                    'status-tarefas-em-andamento' => 'paginas/tarefas/status-tarefas-em-andamento.php',
+                    'atualizar-tarefas' => 'paginas/tarefas/atualizar-tarefas.php'
     
                 ];
     

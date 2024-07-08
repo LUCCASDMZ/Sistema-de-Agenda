@@ -70,6 +70,7 @@
                                 descricaoTarefa LIKE '%$txt_pesquisa%' OR
                                 DATE_FORMAT(dataConclusaoTarefa, '%d/%m/%Y') 
                                 LIKE '%$txt_pesquisa%'
+                                AND statusTarefa = 0
                                 ORDER BY statusTarefa,dataConclusaoTarefa $ordenar
                                 LIMIT $inicio, 
                                 $quantidade";                                

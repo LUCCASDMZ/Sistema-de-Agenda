@@ -1,6 +1,6 @@
 <?php 
 
-    $idTarefa = (isset($_GET['idTarefa']))?$_GET['idTarefa'] : 0;
+    $idTarefa = $_GET['idTarefa'];
     
     $sql = "SELECT * FROM tbtarefas WHERE idTarefa = $idTarefa";
     $resultado = mysqli_query($conexao, $sql);
@@ -47,16 +47,16 @@
             <div class="mb-3 col-3">
                 <label for="recorrenciaTarefa" class="form-label">Recorrencia</label>
                 <select class="form-control" name="recorrenciaTarefa" id="recorrenciaTarefa">
-                    <option <?php echo ($dados["recorrenciaTarefa"] == '0')?'selected':'' ?> value="0">Não recorrente</option>
-                    <option <?php echo ($dados["recorrenciaTarefa"] == '1')?'selected':'' ?> value="1">Diaramente</option>
-                    <option <?php echo ($dados["recorrenciaTarefa"] == '2')?'selected':'' ?> value="2">Semanalmente</option>
-                    <option <?php echo ($dados["recorrenciaTarefa"] == '3')?'selected':'' ?> value="3">Mensalmente</option>
-                    <option <?php echo ($dados["recorrenciaTarefa"] == '4')?'selected':'' ?> value="4">Anualmente</option>
+                    <option value="0" <?php echo ($dados["recorrenciaTarefa"] == '0')?'selected':'' ?> >Não recorrente</option>
+                    <option value="1" <?php echo ($dados["recorrenciaTarefa"] == '1')?'selected':'' ?> >Diaramente</option>
+                    <option value="2" <?php echo ($dados["recorrenciaTarefa"] == '2')?'selected':'' ?> >Semanalmente</option>
+                    <option value="3" <?php echo ($dados["recorrenciaTarefa"] == '3')?'selected':'' ?> >Mensalmente</option>
+                    <option value="4" <?php echo ($dados["recorrenciaTarefa"] == '4')?'selected':'' ?> >Anualmente</option>
                 </select>
             </div>
         </div>
         <div class="mb-3">
-            <input class="btn btn-success" type="submit" value="Adicionar">
+            <input class="btn btn-success" type="submit" value="Atualizar">
         </div>
     </form>
 </div>

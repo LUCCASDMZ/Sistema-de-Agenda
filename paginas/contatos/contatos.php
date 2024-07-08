@@ -88,12 +88,12 @@
             ?>
                 <tr class="text-nowrap">
                     <td class="text-center">
-                        <a class="btn btn-secondary btn-sm" href="index.php?menuop=contatos&pagina=<?=$pagina?>&idContato=<?=$dados['idContato']?>&flagFavoritoContato=<?=$dados['flagFavoritoContato']?>">
+                        <a class="btn " href="index.php?menuop=contatos&pagina=<?=$pagina?>&idContato=<?=$dados['idContato']?>&flagFavoritoContato=<?=$dados['flagFavoritoContato']?>">
                             <?php
                                 if($dados['flagFavoritoContato'] == 0){
-                                    echo "<i class='bi bi-square'></i>";
+                                    echo "<i class=\"bi bi-star\"></i>";
                                 }else{
-                                    echo "<i class='bi bi-check-square-fill'></i>";
+                                    echo "<i class=\"bi bi-star-fill\"></i>";
                                 }
                             ?>
                         </a>

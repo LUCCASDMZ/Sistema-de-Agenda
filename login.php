@@ -1,3 +1,35 @@
+<?php 
+    //conexao com o banco de dados
+    include './db/conexao.php';
+
+    //verificação no banco de dados
+    $msg_error = "";
+
+    if(isset($_POST['loginUser']) & isset($_POST['senhaUser'])){
+        $loginUser = $_POST['loginUser'];
+        $senhaUser = hash('sha256',$_POST['senhaUser']);
+        //$senhaUser = $_POST['senhaUser'];
+        
+        $sql = "SELECT * FROM tbusuarios WHERE loginUser = '$loginUser' AND senhaUser = '$senhaUser'";
+        $rs = mysqli_query($conexao, $sql);
+        $dados = mysqli_fetch_assoc($rs);
+        $linha = mysqli_num_rows($rs);
+
+        if( $linha != 0){
+            session_start();
+            $_SESSION['loginUser'] = $loginUser;        
+            $_SESSION['senhaUser'] = $senhaUser;        
+            $_SESSION['nomeUser'] = $dados['nomeUser'];   
+            
+            header('Location: index.php');
+    }else{
+        $msg_error = "  <div class='alert alert-danger mt-3'
+                            <p>Usuario nao encontrando ou senha não confere</p>
+                        </div>";
+        }
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -14,7 +46,7 @@
             <div style="background-color: aliceblue;" class="col-10 col sm-8 col-md-6 col-lg-4 p-4 bg-whithe shadow rounded">
                 <div class="row justify-content-center mb-4">
                     <img src="img/logo_agendador.png" alt="agendador" class="mb-4">
-                    <form class="needs-validation" novalidate action="index.php" method="post">
+                    <form class="needs-validation" novalidate action="login.php" method="post">
                         <div class="form-group">
                             <label class="form-label" for="loginUser">Login</label>
                             <div class="input-group mb-4">
@@ -28,15 +60,18 @@
                             </div>
                             <div class="form-group mb-4">
                                 <label for="senhaUser" class="form-label">Senha</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        <i class="bi bi-key-fill"></i>
-                                    </span>
-                                    <input required class="form-control" type="password" name="senhaUser" id="senhaUser">
-                                    <div class="invalid-feedback">
-                                    Informe a Senha
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="bi bi-key-fill"></i>
+                                        </span>
+                                        <input required class="form-control" type="password" name="senhaUser" id="senhaUser">
+                                        <div class="invalid-feedback">
+                                        Informe a Senha
+                                    </div>
                                 </div>
-                                </div>
+                                <?php 
+                                    echo $msg_error;
+                                ?>
                             </div>
                             
                             <button class="btn btn-success w-100"><i class="bi bi-box-arrow-in-right"></i> Entrar</button>

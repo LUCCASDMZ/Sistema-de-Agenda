@@ -1,5 +1,28 @@
 <?php 
     include("db/conexao.php");
+    session_start();
+
+    if(isset($_SESSION['loginUser']) and isset($_SESSION['senhaUser'])){
+        $loginUser = $_SESSION['loginUser'];
+        $senhaUser = $_SESSION['senhaUser'];
+        $nomeUser = $_SESSION['nomeUser'];
+
+        $sql = "SELECT * FROM tbusuarios WHERE loginUser = '$loginUser' AND senhaUser = '$senhaUser'";
+        $rs = mysqli_query($conexao, $sql);
+        $dados = mysqli_fetch_assoc($rs);
+        $linha = mysqli_num_rows($rs);
+
+        if($linha == 0){
+            session_unset();
+            session_destroy();
+            header('Location:login.php');
+            exit();
+        }
+        
+    }else{
+        header('Location:login.php');
+        exit();
+    };
 ?>
 
 <!DOCTYPE html>
@@ -24,6 +47,12 @@
                             <li class="nav-item"><a href="index.php?menuop=tarefas"  a class="nav-link"        > <i class="bi bi-list-task"></i> Tarefas</a></li>
                             <li class="nav-item"><a href="index.php?menuop=contatos" a class="nav-link"        ><i class="bi bi-person-square"></i> Contato</a></li>
                         </ul>
+                        <div class="navbar-nav w-100 justify-content-end">
+                            <a href="logout.php" class="nav-link">
+                                <i class="bi bi-person"></i>
+                                    <?=$nomeUser?> Sair <i class="bi bi-box-arrow-right"></i>
+                            </a>
+                        </div>
                     </div>
                 </nav>
             </div>

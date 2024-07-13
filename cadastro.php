@@ -1,33 +1,34 @@
 <?php 
-    //conexao com o banco de dados
-    include './db/conexao.php';
+include("db/conexao.php");
 
-    //verificação no banco de dados
-    $msg_error = "";
+$msg_error = "";
 
-    if(isset($_POST['loginUser']) & isset($_POST['senhaUser'])){
-        $loginUser = mysqli_escape_string($conexao, $_POST['loginUser']);
-        $senhaUser = $_POST['senhaUser'];
-        //$senhaUser = $_POST['senhaUser'];
-        
-        $sql = "SELECT * FROM tbusuarios WHERE loginUser = '$loginUser' AND senhaUser = '$senhaUser'";
-        $rs = mysqli_query($conexao, $sql);
-        $dados = mysqli_fetch_assoc($rs);
-        $linha = mysqli_num_rows($rs);
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST['loginUser']) && isset($_POST['senhaUser']) && isset($_POST['nomeUser'])) {
+        $loginUser = mysqli_real_escape_string($conexao, $_POST['loginUser']);
+        $senhaUser = mysqli_real_escape_string($conexao, $_POST['senhaUser']);
+        $nomeUser = mysqli_real_escape_string($conexao, $_POST['nomeUser']);
 
-        if( $linha != 0){
-            session_start();
-            $_SESSION['loginUser'] = $loginUser;        
-            $_SESSION['senhaUser'] = $senhaUser;        
-            $_SESSION['nomeUser'] = $dados['nomeUser'];   
+        // Verifica se o usuário já existe
+        $checkUserQuery = "SELECT * FROM tbusuarios WHERE loginUser = '$loginUser'";
+        $result = mysqli_query($conexao, $checkUserQuery);
+
+        if (mysqli_num_rows($result) > 0) {
+            $msg_error = "<div class='alert alert-danger mt-3'><p>Usuário já existe. Por favor, escolha outro login.</p></div>";
+        } else {
+            $sql = "INSERT INTO tbusuarios (loginUser, senhaUser, nomeUser) VALUES ('$loginUser', '$senhaUser', '$nomeUser')";
             
-            header('Location: index.php');
-    }else{
-        $msg_error = "  <div class='alert alert-danger mt-3'
-                            <p>Usuario nao encontrando ou senha não confere</p>
-                        </div>";
+            if (mysqli_query($conexao, $sql)) {
+                header("Location: login.php");
+                exit();
+            } else {
+                $msg_error = "<div class='alert alert-danger mt-3'><p>Erro ao executar a consulta: " . mysqli_error($conexao) . "</p></div>";
+            }
         }
+    } else {
+        $msg_error = "<div class='alert alert-danger mt-3'><p>Por favor, preencha todos os campos.</p></div>";
     }
+}
 ?>
 
 <!DOCTYPE html>
@@ -46,8 +47,19 @@
             <div style="background-color: aliceblue;" class="col-10 col sm-8 col-md-6 col-lg-4 p-4 bg-whithe shadow rounded">
                 <div class="row justify-content-center mb-4">
                     <img src="img/logo_agendador.png" alt="agendador" class="mb-4">
-                    <form class="needs-validation" novalidate action="login.php" method="post">
+                    <form class="needs-validation" novalidate action="cadastro.php" method="post">
                         <div class="form-group">
+                            <label class="form-label" for="heade">Nome completo</label>
+                            <div class="input-group mb-4">
+                                <span class="input-group-text">
+                                    <i class="bi bi-person-fill"></i>
+                                </span>
+                                <input required class="form-control" type="text" name="nomeUser" id="nomeUser">
+                                <div class="invalid-feedback">
+                                    Informe o Nome
+                                </div>
+                            </div>
+
                             <label class="form-label" for="loginUser">Login</label>
                             <div class="input-group mb-4">
                                 <span class="input-group-text">
@@ -57,6 +69,9 @@
                                 <div class="invalid-feedback">
                                     Informe o Login
                                 </div>
+                                <?php 
+                                    echo $msg_error;
+                                ?>
                             </div>
                             <div class="form-group mb-4">
                                 <label for="senhaUser" class="form-label">Senha</label>
@@ -69,15 +84,12 @@
                                         Informe a Senha
                                     </div>
                                 </div>
-                                <?php 
-                                    echo $msg_error;
-                                ?>
+
                             </div>
                             
-                            <button class="btn btn-success w-100"><i class="bi bi-box-arrow-in-right"></i> Entrar</button>
-
+                            <button class="btn btn-success w-100"><i class="bi bi-box-arrow-in-right"></i> Cadastre-se</button>
                             <p style="text-align: center;">OU</p>
-                            <button"><a class="btn btn-success w-100" href="./cadastro.php">Cadastre-se</a></button>
+                            <button"><a class="btn btn-success w-100" href="./login.php">Login</a></button>
                         </div>
                     </form>
                 </div>
